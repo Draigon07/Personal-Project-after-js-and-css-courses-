@@ -87,12 +87,10 @@ const data = [
     const manImg = [
                 'https://cdn.pixabay.com/photo/2016/11/21/12/42/beard-1845166__340.jpg',
                 'https://cdn.pixabay.com/photo/2016/11/18/19/07/happy-1836445__340.jpg',
-                'https://cdn.pixabay.com/photo/2017/06/26/02/47/man-2442565__340.jpg',
-                'https://cdn.pixabay.com/photo/2015/03/03/20/42/man-657869__340.jpg',
                 'https://cdn.pixabay.com/photo/2016/05/23/23/32/human-1411499__340.jpg'
       ]
     
-    
+   
     
 const getGenderAndName = (arr,gen)=>{
         const fil = arr.filter(person => person.Gender === gen);
@@ -116,11 +114,23 @@ const getGenderAndName = (arr,gen)=>{
          console.log(fil)
        }
 
-      const getImg = (arr,el)=>{
-     for(let i = 0; i < arr.length; i++){
-         el.src = arr[i]
-     }
-}
+       function getRandomPostion(min,max){
+         let op1 = max-min +1;
+         let op2 = Math.random() * op1;
+         let result = Math.floor(op2) + min
+         return result
+        /*  */
+       }
+
+
+      
+      const getImg = (arr,img)=>{
+        let inUseImg = [];
+         arr.forEach(el =>{
+           let index = getRandomPostion(0, arr.length-1)
+           return img.src = arr[index]
+         })
+      }
 
 const createElements = (gender,name,mail,userName) =>{
     function appen(div,el){
@@ -133,9 +143,6 @@ const createElements = (gender,name,mail,userName) =>{
       return el.classList.add(cla)
    }
 
-   function handleElement(div,el,val,cla){
-         
-   }
 
     const img = document.createElement('img');
     gender === 'Female' ?  getImg(girlImg,img) : getImg(manImg,img)
