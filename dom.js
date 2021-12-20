@@ -92,60 +92,61 @@ const data = [
     
    
     
-const getGenderAndName = (arr,gen)=>{
-        const fil = arr.filter(person => person.Gender === gen);
-        fil.forEach(ele =>{
-           const name = ele.name
-           const mail = ele.email;
-           const userName = ele.username
-           createElements(gen,name,mail,userName)
-           return name
-         })
-         return fil
-      }
+const filUserList = (arr,gender)=>{
+        const fil = arr.filter(person => person.Gender === gender);
+          return fil
+        }
+        
+        
+        const girls = ()=>{   
+          const fil =  filUserList(data,'Female')
+          fil.forEach(ele =>{
+            const name = ele.name
+            const mail = ele.email;
+            const userName = ele.username;
+            console.log(ele)
+            createElementsCards('Female',name,mail,userName)
+          })
+          console.log(fil)
+        }
+        
+        const mans = () =>{
+          const fil =  filUserList(data,'Masculine')
+          fil.forEach(ele =>{
+            const name = ele.name
+            const mail = ele.email;
+            const userName = ele.username;
+            console.log(ele)
+            createElementsCards('Masculine',name,mail,userName)
+          })
 
-      const girls = ()=>{   
-         const fil =  getGenderAndName(data,'Female')
-         console.log(fil)
-      }
+        }
+        
+        function getImg(arrImg,img){
+              for(let i =0; i< arrImg.length; i++){
+                 img.src = arrImg[i]
+                 console.log(arrImg[i])
+              }  
+        }
 
-    const mans = ()=>{
-         const fil = getGenderAndName(data,'Masculine')
-         console.log(fil)
+       
+        function appen(div,el){
+           return div.appendChild(el)
+        }
+        function addTextContent(el,val){
+          return el.textContent = val
+        }
+        function addClases(el,cla){
+          return el.classList.add(cla)
        }
+       
+const createElementsCards = (gender,name,mail,userName) =>{
 
-       function getRandomPostion(min,max){
-         let op1 = max-min +1;
-         let op2 = Math.random() * op1;
-         let result = Math.floor(op2) + min
-         return result
-        /*  */
-       }
-
-
-      
-      const getImg = (arr,img)=>{
-        let inUseImg = [];
-         arr.forEach(el =>{
-           let index = getRandomPostion(0, arr.length-1)
-           return img.src = arr[index]
-         })
-      }
-
-const createElements = (gender,name,mail,userName) =>{
-    function appen(div,el){
-       return div.appendChild(el)
-    }
-    function addTextContent(el,val){
-      return el.textContent = val
-    }
-    function addClases(el,cla){
-      return el.classList.add(cla)
+   function reccArr(gen){
+      gen === 'Masculine' ?  getImg(manImg,img) : getImg(girlImg,img)
+      appen(figure,img)
    }
-
-
     const img = document.createElement('img');
-    gender === 'Female' ?  getImg(girlImg,img) : getImg(manImg,img)
     const h1 = document.createElement('h1');
     addTextContent(h1,name)
     const h3 = document.createElement('h3');
@@ -155,18 +156,64 @@ const createElements = (gender,name,mail,userName) =>{
     const figure = document.createElement('figure')
     const div = document.createElement('div')
     const textDiv = document.createElement('div');
-    appen(figure,img)
     appen(div,figure)
     appen(textDiv,h1)
     appen(textDiv,h3)
     appen(textDiv,a)
     appen(div,textDiv)
     appen(wrapperUsers,div)
-    addClases(textDiv,'text_cont')
-   }
+    addClases(textDiv,'text_cont');
+    reccArr(gender)
+   
+       
+  }
 
-girls()
 mans()
+girls()
+
+function getuserInfo(){
+  const name = document.querySelector('.nameUser');
+  const email = document.querySelector('.emailUser');
+  const user = document.querySelector('.user');
+  const id = Math.random(10)*100
+  console.log(id)
+  function getValues(el){
+    return el.value
+  }
+  function createElements(){
+    const h2 = document.createElement('h2');
+    const h3 = document.createElement('h3');
+    const a = document.createElement('a');
+    const div = document.createElement('div')
+    addTextContent(h2,getValues(name));
+    addTextContent(h3,getValues(user));
+    addTextContent(a,getValues(email));
+    const textDiv = document.createElement('div');
+    appen(textDiv,h2)
+    appen(textDiv,h3)
+    appen(textDiv,a)
+    addClases(textDiv,'text_cont')
+    appen(div,textDiv)
+    appen(wrapperUsers,div)
+  }
+  createElements()
+
+}
+
+const btnSave = document.getElementById('saveUser');
+btnSave.addEventListener('click', e =>{
+  e.preventDefault()
+  getuserInfo()
+})
+
+
+/*Pendiente: Función para el id
+             Funcion de imagenes aleatorias
+             Imagen para el usuario
+             Agregar el usuario a la data
+             */
+            
+
 
     
     
