@@ -102,6 +102,12 @@ li a{
     border: 3px solid gold;
 }
 
+.wrapper div{
+    order: 1;
+
+}
+
+
 figure > img{
     border-radius: 50%;
     object-fit: cover;

@@ -71,7 +71,7 @@ const data = [
       "name": "Clementina DuBuque",
       "username": "Moriah.Stanton",
       "email": "Rey.Padberg@karina.biz",
-       "Gender": "Female",
+      "Gender": "Female",
      
     }
   ]
@@ -91,6 +91,8 @@ const data = [
       ]
     
    
+
+  
     
 const filUserList = (arr,gender)=>{
         const fil = arr.filter(person => person.Gender === gender);
@@ -119,15 +121,11 @@ const filUserList = (arr,gender)=>{
             console.log(ele)
             createElementsCards('Masculine',name,mail,userName)
           })
+        }
 
-        }
+       
         
-        function getImg(arrImg,img){
-              for(let i =0; i< arrImg.length; i++){
-                 img.src = arrImg[i]
-                 console.log(arrImg[i])
-              }  
-        }
+      
 
        
         function appen(div,el){
@@ -142,9 +140,21 @@ const filUserList = (arr,gender)=>{
        
 const createElementsCards = (gender,name,mail,userName) =>{
 
+  const getPosition  = (arr,img)=>{
+    for(let i =0; i<arr.length; i++){
+      getImg(arr,i,img)
+    }
+
+  }
+
+  function getImg(arr,position,img){
+    img.src = arr[position]
+    console.log(arr[position]) 
+}
+
    function reccArr(gen){
-      gen === 'Masculine' ?  getImg(manImg,img) : getImg(girlImg,img)
-      appen(figure,img)
+     appen(figure,img)   
+   gen === 'Masculine' ?   getPosition(manImg,img) :  getPosition(girlImg,img)
    }
     const img = document.createElement('img');
     const h1 = document.createElement('h1');
@@ -172,32 +182,80 @@ mans()
 girls()
 
 function getuserInfo(){
+  const userObj = {}
   const name = document.querySelector('.nameUser');
   const email = document.querySelector('.emailUser');
   const user = document.querySelector('.user');
-  const id = Math.random(10)*100
-  console.log(id)
+
   function getValues(el){
     return el.value
   }
+
+  function getRandomId(){
+    const id = Math.floor(Math.random()*1000)
+    return id
+  }
+
   function createElements(){
-    const h2 = document.createElement('h2');
+    const h1 = document.createElement('h1');
     const h3 = document.createElement('h3');
     const a = document.createElement('a');
-    const div = document.createElement('div')
-    addTextContent(h2,getValues(name));
+    const div = document.createElement('div');
+    const figure = document.createElement('figure')
+    addTextContent(h1,getValues(name));
     addTextContent(h3,getValues(user));
     addTextContent(a,getValues(email));
     const textDiv = document.createElement('div');
-    appen(textDiv,h2)
+    appen(textDiv,h1)
     appen(textDiv,h3)
     appen(textDiv,a)
     addClases(textDiv,'text_cont')
     appen(div,textDiv)
-    appen(wrapperUsers,div)
-  }
-  createElements()
+    appen(wrapperUsers,div);
 
+
+    function newUser (){
+      const createUserObj = ({id,name,userName,email})=>{
+        const obj = {id,name,userName,email}
+       console.log(obj)
+       data.push(obj)
+       console.log(data)
+      }
+
+      createUserObj({
+         "id": getRandomId(),
+         "name": getValues(name),
+         "userName" : getValues(user),
+         "email" : getValues(email)
+       }) 
+    }
+    newUser()
+
+    const userimg = [
+                      'https://cdn.pixabay.com/photo/2018/04/27/03/50/portrait-3353699__340.jpg',
+                      'https://cdn.pixabay.com/photo/2015/01/31/18/17/arabs-618749__340.jpg',
+                      'https://cdn.pixabay.com/photo/2017/08/12/18/31/male-2634974__340.jpg'                         
+  ]
+
+  function selectUserPhoto(){
+    function getRandomPosition(min,max){
+      let one = max-min + 1;
+      let two = Math.floor(Math.random()*one)
+      return two
+    }
+
+    let index = getRandomPosition(0,userimg.length+1)
+    const img = document.createElement('img');
+    img.src = userimg[index]
+    appen(figure,img)
+    appen(div,figure)
+  }
+  selectUserPhoto()
+  
+  }
+
+  
+  createElements()
 }
 
 const btnSave = document.getElementById('saveUser');
@@ -207,10 +265,9 @@ btnSave.addEventListener('click', e =>{
 })
 
 
-/*Pendiente: Función para el id
-             Funcion de imagenes aleatorias
-             Imagen para el usuario
-             Agregar el usuario a la data
+/*Pendiente: 
+           Función para imagenes automaticas;
+           evitar que se repita el guardado doble de usuarios
              */
             
 
