@@ -257,7 +257,7 @@ function getuserInfo(){
 
 function inputValidation(){
   let count = 0;  
-  let users = []
+  let users = [];
   const error = document.querySelector('.error')
   function emailValidation(input){
     let validRegex =  /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
@@ -279,22 +279,31 @@ function inputValidation(){
    
     const newUserList = (arr) =>{
       arr.forEach(el =>{
-        const names = el.name
+        const names = el.name.toLowerCase()
         users.push(names)
         return users
       })
     }
-
     
-    
-    nameAndUserValidation(name)
-    nameAndUserValidation(user)
-    emailValidation(email);
-    if(count === 3){
-      createElements()
+    const ifUserRepeated = (arr,Name)=>{
+      newUserList(data)
+        const lowered = Name.toLowerCase();
+        if(arr.includes(lowered)){
+          error.textContent = 'Usuario ya existente'
+        }else{
+          nameAndUserValidation(name)
+          nameAndUserValidation(user)
+          emailValidation(email);
+          if(count === 3){
+            createElements()
+            error.textContent = ''
+          }
+        }
+      }
+      
+      ifUserRepeated(users,getValues(name))
     }
-  }
-
+    
 }
 
 
