@@ -84,7 +84,7 @@ li a{
     justify-content: center;
 }
 
-.wrapper > div h1, h3{
+.wrapper > div h1, h3,a{
     display: block;
     margin: 5px 0;
     font-size: 20px;

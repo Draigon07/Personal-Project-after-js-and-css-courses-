@@ -196,6 +196,8 @@ function getuserInfo(){
     return id
   }
 
+  inputValidation()
+  
   function createElements(){
     const h1 = document.createElement('h1');
     const h3 = document.createElement('h3');
@@ -217,46 +219,89 @@ function getuserInfo(){
     function newUser (){
       const createUserObj = ({id,name,userName,email})=>{
         const obj = {id,name,userName,email}
-       console.log(obj)
-       data.push(obj)
-       console.log(data)
+        data.push(obj)
       }
-
+      
       createUserObj({
-         "id": getRandomId(),
-         "name": getValues(name),
+        "id": getRandomId(),
+        "name": getValues(name),
          "userName" : getValues(user),
          "email" : getValues(email)
-       }) 
-    }
-    newUser()
+        }) 
+      }
+      newUser()
 
-    const userimg = [
+     
+      const userimg = [
                       'https://cdn.pixabay.com/photo/2018/04/27/03/50/portrait-3353699__340.jpg',
                       'https://cdn.pixabay.com/photo/2015/01/31/18/17/arabs-618749__340.jpg',
                       'https://cdn.pixabay.com/photo/2017/08/12/18/31/male-2634974__340.jpg'                         
   ]
-
+  
   function selectUserPhoto(){
     function getRandomPosition(min,max){
       let one = max-min + 1;
       let two = Math.floor(Math.random()*one)
       return two
     }
-
+    
     let index = getRandomPosition(0,userimg.length+1)
     const img = document.createElement('img');
-    img.src = userimg[index]
+    img.src = userimg[index];
     appen(figure,img)
     appen(div,figure)
   }
   selectUserPhoto()
   
-  }
-
-  
-  createElements()
 }
+
+function inputValidation(){
+  let count = 0;  
+  const error = document.querySelector('.error')
+  function emailValidation(input){
+    let validRegex =  /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    if(input.value.match(validRegex)){
+      count++
+    }else{
+     error.textContent ='Invalid Email'
+    }
+  }
+  
+   function nameAndUserValidation(input){
+     if(input.value.length !== 0 && input.value.length > 6){
+       count++
+      }else{
+        error.textContent = `Usuario Invalido`
+      }
+    }
+    
+    const newUserList = (arr) =>{
+      const users = []
+      arr.forEach(el =>{
+        const names = el.name
+        users.push(names)
+      })
+    }
+    
+    const ifRepeatedUser = (arr,name)=>{
+      if(arr.includes(getValues(name))){
+         error.textContent =  'User was already save'
+      }else{
+        error.textContent = ''
+        newUserList(data)
+        createElements()
+      }
+    }
+     nameAndUserValidation(name)
+     nameAndUserValidation(user)
+     emailValidation(email);
+     ifRepeatedUser(data,name)
+}
+
+}
+
+
+
 
 const btnSave = document.getElementById('saveUser');
 btnSave.addEventListener('click', e =>{
