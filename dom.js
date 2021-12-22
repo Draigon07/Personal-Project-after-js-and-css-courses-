@@ -257,6 +257,7 @@ function getuserInfo(){
 
 function inputValidation(){
   let count = 0;  
+  let users = []
   const error = document.querySelector('.error')
   function emailValidation(input){
     let validRegex =  /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
@@ -275,28 +276,24 @@ function inputValidation(){
       }
     }
     
+   
     const newUserList = (arr) =>{
-      const users = []
       arr.forEach(el =>{
         const names = el.name
         users.push(names)
+        return users
       })
     }
+
     
-    const ifRepeatedUser = (arr,name)=>{
-      if(arr.includes(getValues(name))){
-         error.textContent =  'User was already save'
-      }else{
-        error.textContent = ''
-        newUserList(data)
-        createElements()
-      }
+    
+    nameAndUserValidation(name)
+    nameAndUserValidation(user)
+    emailValidation(email);
+    if(count === 3){
+      createElements()
     }
-     nameAndUserValidation(name)
-     nameAndUserValidation(user)
-     emailValidation(email);
-     ifRepeatedUser(data,name)
-}
+  }
 
 }
 
