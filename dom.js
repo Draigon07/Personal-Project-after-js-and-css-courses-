@@ -75,7 +75,10 @@ const data = [
      
     }
   ]
+  let numbers = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,55,6,7,4,5,2]
 
+  const newNumbers = [...new Set(numbers)]
+  console.log(newNumbers)
   const wrapperUsers = document.querySelector('.wrapper')
 
 
@@ -87,8 +90,13 @@ const data = [
     const manImg = [
                 'https://cdn.pixabay.com/photo/2016/11/21/12/42/beard-1845166__340.jpg',
                 'https://cdn.pixabay.com/photo/2016/11/18/19/07/happy-1836445__340.jpg',
-                'https://cdn.pixabay.com/photo/2016/05/23/23/32/human-1411499__340.jpg'
-      ]
+                'https://cdn.pixabay.com/photo/2016/05/23/23/32/human-1411499__340.jpg',
+                 'https://cdn.pixabay.com/photo/2016/11/29/03/52/man-1867175__340.jpg',
+                 'https://cdn.pixabay.com/photo/2019/04/16/23/59/sad-4133121__340.jpg',
+                 'https://cdn.pixabay.com/photo/2018/10/29/21/46/human-3782189__340.jpg',
+                 'https://cdn.pixabay.com/photo/2015/08/05/04/02/people-875597__340.jpg',
+                 'https://cdn.pixabay.com/photo/2016/11/29/04/04/man-1867224__340.jpg'
+                ] 
     
    
 
@@ -140,21 +148,42 @@ const filUserList = (arr,gender)=>{
        
 const createElementsCards = (gender,name,mail,userName) =>{
 
-  const getPosition  = (arr,img)=>{
-    for(let i =0; i<arr.length; i++){
-      getImg(arr,i,img)
+  
+
+  function getImg(imgArr,img){
+    let arrPositions = [];
+
+    function getRandomPosition(min,max){
+      let one = max-min + 1;
+      let two = Math.floor(Math.random()*one)
+      return two
+    }
+      for (let i = 0; i < imgArr.length; i++) {
+        let index = getRandomPosition(0,imgArr.length-1)
+        arrPositions.push(index)
+      }
+
+      arrPositions = [...new Set(arrPositions)]
+      arrPositions.forEach(el =>{
+         el = getRandomPosition(0,arrPositions.length)
+         img.src = imgArr[el]
+         console.log(el) 
+      })
     }
 
-  }
+    const excGetImg  = (arr,img)=>{
+     
+        getImg(arr,img)
+        
+    }
 
-  function getImg(arr,position,img){
-    img.src = arr[position]
-    console.log(arr[position]) 
-}
+   
+  
 
+  
    function reccArr(gen){
      appen(figure,img)   
-   gen === 'Masculine' ?   getPosition(manImg,img) :  getPosition(girlImg,img)
+     gen === 'Masculine' ?    excGetImg(manImg,img) :  excGetImg(girlImg,img)
    }
     const img = document.createElement('img');
     const h1 = document.createElement('h1');
@@ -172,17 +201,15 @@ const createElementsCards = (gender,name,mail,userName) =>{
     appen(textDiv,a)
     appen(div,textDiv)
     appen(wrapperUsers,div)
-    addClases(textDiv,'text_cont');
-    reccArr(gender)
-   
-       
+    addClases(textDiv,'text_cont'); 
+    reccArr(gender)  
   }
-
-mans()
-girls()
-
-function getuserInfo(){
-  const userObj = {}
+    
+    mans()
+    girls()
+    
+    function getuserInfo(){
+     const userObj = {}
   const name = document.querySelector('.nameUser');
   const email = document.querySelector('.emailUser');
   const user = document.querySelector('.user');
