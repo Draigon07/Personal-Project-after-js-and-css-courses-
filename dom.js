@@ -166,15 +166,14 @@ const createElementsCards = (gender,name,mail,userName) =>{
       arrPositions = [...new Set(arrPositions)]
       arrPositions.forEach(el =>{
          el = getRandomPosition(0,arrPositions.length)
-         img.src = imgArr[el]
-         console.log(el) 
+         img.src = imgArr[el] 
       })
     }
 
     const excGetImg  = (arr,img)=>{
-     
+      for(let i =0; i < arr.length; i++){
         getImg(arr,img)
-        
+        }
     }
 
    
