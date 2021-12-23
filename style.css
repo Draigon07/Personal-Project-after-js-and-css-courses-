@@ -94,7 +94,6 @@ li a{
 
 .wrapper figure{
     max-width: 50%;
-    max-height: 90%;
     border-radius: 50%;
     grid-column: span 1;
     align-content: center;
@@ -113,6 +112,7 @@ figure > img{
     object-fit: cover;
     width: 100%;
     height: 100%;
+    
 }
 
 .user_register{
@@ -129,7 +129,7 @@ figure > img{
     display: flex;
     flex-flow: column wrap;
     width: 70%;
-    height: 140px;
+    height: 190px;
     background-color:inherit;
     padding: 8px;
     justify-content: center;
@@ -144,6 +144,12 @@ form input,button{
     outline: none;
     border: none;
     margin: 0 auto;
+}
+
+.error{
+    margin: 5px 2px;
+    color: red;
+    font-weight: bold;
 }
 
 
