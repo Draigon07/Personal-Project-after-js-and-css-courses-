@@ -75,10 +75,7 @@ const data = [
      
     }
   ]
-  let numbers = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,55,6,7,4,5,2]
-
-  const newNumbers = [...new Set(numbers)]
-  console.log(newNumbers)
+  
   const wrapperUsers = document.querySelector('.wrapper')
 
 
@@ -150,7 +147,8 @@ const createElementsCards = (gender,name,mail,userName) =>{
 
   
 
-  function getImg(imgArr,img){
+   function getImg(imgArr,img){
+
     let arrPositions = [];
 
     function getRandomPosition(min,max){
@@ -163,23 +161,20 @@ const createElementsCards = (gender,name,mail,userName) =>{
         arrPositions.push(index)
       }
 
-      arrPositions = [...new Set(arrPositions)]
-      arrPositions.forEach(el =>{
-         el = getRandomPosition(0,arrPositions.length)
-         img.src = imgArr[el] 
+      console.log(arrPositions)
+
+      let newArrPositions = [...new Set(arrPositions)]
+      console.log(newArrPositions)
+      newArrPositions.forEach(el =>{
+         el = getRandomPosition(0,imgArr.length-1)
+         return img.src = imgArr[el]
       })
     }
 
     const excGetImg  = (arr,img)=>{
-      for(let i =0; i < arr.length; i++){
         getImg(arr,img)
-        }
     }
 
-   
-  
-
-  
    function reccArr(gen){
      appen(figure,img)   
      gen === 'Masculine' ?    excGetImg(manImg,img) :  excGetImg(girlImg,img)
@@ -208,10 +203,9 @@ const createElementsCards = (gender,name,mail,userName) =>{
     girls()
     
     function getuserInfo(){
-     const userObj = {}
-  const name = document.querySelector('.nameUser');
-  const email = document.querySelector('.emailUser');
-  const user = document.querySelector('.user');
+    const name = document.querySelector('.nameUser');
+    const email = document.querySelector('.emailUser');
+    const user = document.querySelector('.user');
 
   function getValues(el){
     return el.value
@@ -224,7 +218,7 @@ const createElementsCards = (gender,name,mail,userName) =>{
 
   inputValidation()
   
-  function createElements(){
+  function createElementsUser(){
     const h1 = document.createElement('h1');
     const h3 = document.createElement('h3');
     const a = document.createElement('a');
@@ -283,7 +277,6 @@ const createElementsCards = (gender,name,mail,userName) =>{
 
 function inputValidation(){
   let count = 0;  
-  let users = [];
   const error = document.querySelector('.error')
   function emailValidation(input){
     let validRegex =  /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
@@ -298,36 +291,68 @@ function inputValidation(){
      if(input.value.length !== 0 && input.value.length > 6){
        count++
       }else{
-        error.textContent = `Usuario Invalido`
+        error.textContent = `Nombre Invalido`
       }
     }
     
    
-    const newUserList = (arr) =>{
-      arr.forEach(el =>{
-        const names = el.name.toLowerCase()
+    
+    function ifUserRepeated(arr,Name,Email,User){
+    let users = [];
+    let emails = [];
+    let userNames = [];
+    
+    const newUserList = arr => {
+      arr.forEach(el => {
+        const names = el.name
         users.push(names)
         return users
       })
     }
-    
-    const ifUserRepeated = (arr,Name)=>{
-      newUserList(data)
-        const lowered = Name.toLowerCase();
-        if(arr.includes(lowered)){
-          error.textContent = 'Usuario ya existente'
-        }else{
-          nameAndUserValidation(name)
-          nameAndUserValidation(user)
-          emailValidation(email);
-          if(count === 3){
-            createElements()
-            error.textContent = ''
-          }
-        }
+
+      const emailList = arr => {
+        arr.forEach(el => {
+          const email = el.email
+          emails.push(email)
+          return emails
+        })
+      }
+
+      const userNameList = arr => {
+        arr.forEach(el => {
+          const userName = el.username
+          userNames.push(userName)
+          return userNames
+        })
       }
       
-      ifUserRepeated(users,getValues(name))
+    newUserList(arr)
+    userNameList(arr)    
+    emailList(arr)
+
+    function lowered(ele) {
+    return ele.toLowerCase()
+    }
+
+    function included(arr, el) {
+       return arr.includes(lowered(el))
+    }
+
+    if (included(userNames,User) || included(users,Name) || included(emails,Email)) {
+      error.textContent = 'Usuario ya existente'
+    } else {
+      nameAndUserValidation(name)
+      nameAndUserValidation(user)
+      emailValidation(email)
+      if (count === 3) {
+        createElementsUser()
+        error.textContent = ''
+      }
+    }
+  }
+
+  ifUserRepeated(data,getValues(name),getValues(email),getValues(user))
+
     }
     
 }
@@ -344,7 +369,6 @@ btnSave.addEventListener('click', e =>{
 
 /*Pendiente: 
            Función para imagenes automaticas;
-           evitar que se repita el guardado doble de usuarios
              */
             
 
