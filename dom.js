@@ -352,9 +352,7 @@ function inputValidation(){
   }
 
   ifUserRepeated(data,getValues(name),getValues(email),getValues(user))
-
     }
-    
 }
 
 
